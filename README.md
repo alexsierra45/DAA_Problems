@@ -18,7 +18,7 @@ Ayude a Javier a saber la cantidad máxima de preguntas que puede responder con 
 
 ## Ciudades
 
-Cuba tiene inicialmente $N$ ciudades aisladas, donde la $i$-ésima ciudad tiene una significancia de $A_i$. Alex, el Presidente de Cuba quiere conectar todas las ciudades. Él puede construir una carretera bidireccional de longitud $L$ $(L > 0)$ desde la ciudad $X$ a la ciudad $Y$ si $(A_X \& A_Y \& L) = L$, donde $ \& $ representa el operador AND bit a bit.
+Cuba tiene inicialmente $N$ ciudades aisladas, donde la $i$-ésima ciudad tiene una significancia de $A_i$. Alex, el Presidente de Cuba quiere conectar todas las ciudades. Él puede construir una carretera bidireccional de longitud $L$ $(L > 0)$ desde la ciudad $X$ a la ciudad $Y$ si $(A_X$ & $A_Y$ & $L) = L$, donde & representa el operador AND bit a bit.
 
 ¿Cuál es la longitud total mínima de las carreteras que tiene que construir para conectar todas las ciudades en Cuba? Imprime $-1$ si es imposible.
 

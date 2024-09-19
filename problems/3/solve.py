@@ -10,8 +10,9 @@ def solve(values: list):
                 ans += edge_cost
             else:
                 new_values.append(v)
-        ans -= edge_cost
-        new_values.append(values_or)
+        if values_or != 0:
+            ans -= edge_cost
+            new_values.append(values_or)
         values = new_values
         if len(values) == 1:
             break

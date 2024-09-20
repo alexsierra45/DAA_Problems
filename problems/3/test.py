@@ -2,8 +2,8 @@ import networkx as nx
 import random
 from solve import solve
 
-MAX_NODE_NUMBER=10**3
-MAX_NODE_VALUE=2**32
+MAX_NODE_NUMBER = 10**3
+MAX_NODE_VALUE = 2**32
 
 def generate_case():
     global MAX_NODE_NUMBER
@@ -34,7 +34,7 @@ def solve_test(case):
                 G.add_edge(i, j, weight=weight)
 
     # Encontrar el árbol abarcador de costo mínimo usando el algoritmo de Prim
-    T = nx.minimum_spanning_tree(G)
+    T: nx.Graph = nx.minimum_spanning_tree(G)
 
     # Calcular la suma de los pesos de las aristas del MST
     total_weight = sum(weight for _, _, weight in T.edges(data='weight'))
@@ -42,14 +42,20 @@ def solve_test(case):
     return total_weight
 
 def generate_test(num):
-    a = []
+    tests = []
     for _ in range(num):
-        b = generate_case()
-        a.append((b, solve_test(b)))
+        case = generate_case()
+        tests.append((case, solve_test(case)))
     accuracy = 0
-    for t, ans in a:
-        if solve(t) == ans:
+    for case, ans in tests:
+        solution = solve(case)
+        if solution == ans:
             accuracy += 1
-    print(f'Accuracy of {accuracy / num * 100}% for {num} tests cases')
+        else:
+            print(f'Error in test {case}')
+            print(f'Solution: {solution}, expected solution: {ans}')
+
+    plural = '' if num == 1 else 's'
+    print(f'Accuracy of {accuracy / num * 100}% for {num} test{plural} case{plural}')
 
 generate_test(100)

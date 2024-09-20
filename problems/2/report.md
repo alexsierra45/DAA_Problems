@@ -53,7 +53,89 @@ pk$.
 
 Estamos explorando todas las posibilidades. Sea $S$ la respuesta correcta, esta tiene que tener una combinacion de observaciones.
 
-# Enfoque 2: Programacion dinamica
+# Solucion propuesta: Programacion dinamica
+
+El algoritmo consiste en ver cual es la mayor cantidad de problemas que se pueden resolver a partir de la posicion $i$ (con $1\leq i\leq n$), contando con $p_i$ (con $1\leq p_i\leq p$) oportunidades en cada uno de los posibles escenarios. Cada escenario consiste en ver cuales de los primeros $k-1$ ejercicios son observados  desde $A$ o $B$ respectivamente a partir de la posicion $i$ por una ventana que comience antes de dicha posición. En otras palabras, si durante una oportunidad se observo a partir de un valor anterior a $i$, es posible que las primeras posiciones del intervalo sean observadas por un intervalo anterior. Por lo que se analizan para $k_A$ y $k_B$ $(0\leq k_A,k_B\leq k)$ posibles primeras posiciones vistas desde una ventana previa. 
+
+Para un estado $(i,k_A,k_B,p_i)$ su valor depende de los estados: 
+i. $(i+1,max(k_A-1,0),max(k_B-1,0),p_i)$
+ii. $(i+1,k-1,max(k_B-1,0),p_i-1)$
+iii. $(i+1,max(k_A-1,0),k-1,p_i-1)$
+iv. $(i+1,k-1,k-1,p_i-2)$
+
+Que representan (i) no tomar ninguna oportunidad que parta de $i$, (ii) tomar una oportunidad que empiece en $i$ desde $A$, (iii) tomar una oportunidad que empiece en $i$ desde $B$ y (iv) tomar las oportunidades que empiecen en $i$ tanto en $A$ como en $B$.
+
+Ademas, si hay una respuesta en la posicion i, es posible ver dicha respuesta. Para esto hay diferentes escenarios:
+1. Si $a_i=1$ y $k_A>0$ (el ejercicio es visto desde una oportunidad previa en A)
+2. Si $b_i=1$ y $k_B>0$ (el ejercicio es visto desde una oportunidad previa en B)
+3. Si $a_i=1$ y se decide hacer (ii) y (iv) (se decide hacer una oportunidad que empiece en A)
+4. Si $b_i=1$ y se decide hacer (iii) y (iv) (se decide hacer una oportunidad que empiece en B)
+
+Si ocurre uno de estos escenarios la solucion debe aumentar en 1. Para mas formalidad sean $r_A$ y $r_B$ tal que:
+
+$
+r_A =
+\begin{cases}
+1 & \text{si } k_A>0\\
+0 & \text{en otro caso}\\
+\end{cases}
+$
+
+$
+r_B =
+\begin{cases}
+1 & \text{si } k_B>0\\
+0 & \text{en otro caso}\\
+\end{cases}
+$
+
+Entonces finalmente el costo quedaria:
+
+$
+c(i,k_A,k_B,p) =
+\begin{cases}
+c(\text{i})+max(r_Aa_i,r_Bb_i)\\
+c(\text{ii})+max(a_i,r_Bb_i)\\
+c(\text{iii})+max(r_Aa_i,b_i)\\
+c(\text{iv})+max(r_Aa_i,b_i)\\
+\end{cases}
+$
+
+
+Nota: $c(i,k_A,k_B,p_i)=0$ si $i>n$ y $c(i,k_A,k_B,p_i)=-1$ si  $p_i<0$
+
+La respuesta del ejercicio seria $c(0,0,0,p)$
+
+
+## Correctitud
+
+Sea 
+Si $S=\{q_{i_1C_1},q_{i_2C_2},...\}$ es una solucion, existe una secuencia valida de valores $\=S$ conformado por ((i),(ii),(iii),(iv)) que parten de $c(0,0,0,p)$ en la cual se observa $S$ y sus valores son iguales. Diremos que $\=S \rightarrow S$ si esto ocurre.
+
+Decimos que una solucion $S$ es valida si $|S|\leq p$. Y una secuencia $\=S$ es valida si ii$(\=S)$ $+$ iii$(\=S)+2$iv$(\=S)\leq p$
+
+
+Si $n=1$, existen 4 posibles valores de $S$: $\{\}$, $\{q_{1A}\}$, $\{q_{1B}\}$, $\{q_{1A},q_{1B}\}$, y trivialmente a cada una se le corresponde la secuencias , $\{$(i)$\}$,$\{$(ii)$\}$,$\{$(iii)$\}$, $\{$(iv)$\}$. Trivialmente, si $S$ es una  secuencia valida para $p$, $\=S$ tambien lo es y los valores de ambas son iguales.
+
+Supongamos que $\exist N $ $\forall j,S=\{q_{i_1C_1}, q_{i_2C_2,...}\}: ((q_{jA} \isin S$ $\vee$ $q_{jB} \isin S) => j<N) => \exist \=S : \=S\rightarrow S$.
+
+En otras palabras, existe N tal que cualquier solucion S sobre N ejercicios tiene $\=S$ tal que  $\=S\rightarrow S$
+
+Dado $S$ una solucion valida de un problema con $N+1$ ejercicios, sea $S'=S-\{q_{(N+1)A}, q_{(N+1)B}\}$. Luego, $S'$ es una solucion valida de un problema de tamaño $N$ y con el mismo costo. Por lo que existe $\=S'$ tal que $\=S'\rightarrow S'$ 
+
+Luego trivialmente se comprueba para cada uno de los siguientes casos:
+1. Si $q_{(N+1)A}\not\isin S$ y $q_{1B}\not\isin S$ entonces $\=S=\=S'+$(i)
+1. Si $q_{(N+1)A}\isin S$ y $q_{1B}\not\isin S$ entonces $\=S=\=S'+$(ii)
+1. Si $q_{(N+1)A}\not\isin S$ y $q_{1B}\isin S$ entonces $\=S=\=S'+$(iii)
+1. Si $q_{(N+1)A}\isin S$ y $q_{1B}\isin S$ entonces $\=S=\=S'+$(iv)
+
+Luego por induccion, $\forall S=\{q_{i_1C_1}, q_{i_2C_2},...\}\exist\=S:\=S\rightarrow S$
+
+## Complejidad temporal
+
+Por cada posible estado se realiza $O(1)$ operaciones. Y en total hay $npk^2$ estados. Complejidad temporal: $O(npk^2)$
+
+## Podas
 
 ### Lema 1
 
@@ -132,36 +214,8 @@ Pero $S$ es optimo, por lo que: $$c(S)= c(S')$$
 
 Y optenemos una solucion optima diferente.
 
-## Idea de la solucion
+### Complejidad de las podas
 
-Por el lema 1 y lema 2, descartamos soluciones que partan de indices iguales o partan de indices que no posean solucion. Luego, dado una posicion $i$ hay 3 posibles acciones que pueden tomarse:
-1- Ignorar la posicion
-2- Tomar el intervalo que empieza en ella en A (tomar $q_{iA}$)
-3- Tomar el intervalo que empieza en ella en B (tomar $q_{iA}$)
+Para el lema 1: Este lema evita calcular (ii) cuando $a_i=0$, (iii) cuando $b_i=0$ y $iv$ cuando $a_i=0$ o $b_i=0$. Al solo analizar aquellos casos donde hay una respuesta, sea $m=\sum (a_i + b_i - a_ib_i)$ la cantidad de ejercicios resueltos, la complejidad baja a  $O(mpk^2)$.
 
-Solo hay 3 factores que pueden afectar la toma de esta decision:
-1- La cantidad de intervalos vistos
-2- Si el indice pertenece a un intervalo de A tomado con anterioridad
-3- Si el indice pertenece a un intervalo de B tomado con anterioridad
-
-La primera no afecta si no se ha tomado ningun intervalo, la segunda y la tercera no afecta al primer indice, pues el unico intervalo que incluye al primer indice es al que empieza en este.
-
-Luego, la solucion del problema puede verse como
-
-$$
-S = max
-\begin{cases} \text{Mejor solucion dado que tomaste }q_{1A} \\
-\text{Mejor solucion dado que tomaste }q_{1B}\\
-\text{Mejor solucion no tomando 1}
-\end{cases}
-$$
-
-Luego, esto se puede ver de forma recursiva tomando cada indice teniendo en cuenta la cantidad de oportunidades restantes (entre 0 y p), cual es la distancia a el ultimo intervalo que empieza en A y B respectivamente (entre 1 y k).
-
-Por lo que cada caso se puede ver como la tupla $(i,A,B,p)$ donde $i$ es la posicion del array, $A$ y $B$ son el maximo entre 0 y $k-d$ donde $d$ es la diferencia entre los indices $i$ y el indice del primer valor del ultimo intervalo tomado de A y B respectivamente y p la cantidad de oportunidades que quedan por tomar.
-
-
-## Complejidad temporal
-
-Por cada tupla realizo O(1) operaciones, y tengo una tupla por cada problema, por cada tamaño de ventana de A y de B, y para cualquier numero de oportunidades.
-
+Par el lema 2: Con este lema, descartamos aquellas soluciones que usen (iv) por completo. La repercusion directa es que no se analizaran los casos donde si $k_A\neq0,k_A=k_B$. Por lo que la complejidad baja a $O(np(k^2-k+1))$.

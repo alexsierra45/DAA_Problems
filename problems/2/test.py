@@ -77,4 +77,6 @@ def generate_test(num):
     plural = '' if num == 1 else 's'
     print(f'Accuracy of {accuracy / num * 100}% for {num} test{plural} case{plural}')
 
-generate_test(100)
+
+if __name__=="main":
+    generate_test(100)

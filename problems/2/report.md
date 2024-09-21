@@ -137,7 +137,7 @@ Por cada posible estado se realiza $O(1)$ operaciones. Y en total hay $npk^2$ es
 
 ## Podas
 
-### Lema 1
+### Lema 1: Empezar por ejercicio con solucion
 
 Si existe una solucion óptima $S$ con $c(S)\neq0$, entonces existe una solucion optima S' tal que 
 $\forall i:q_{iA}\isin S'$ => $a_i=1$ $\wedge$ $q_{iB}\isin S'$ => $b_i=1$.
@@ -172,7 +172,7 @@ Pero como $S$ es optimo: $c(S)= c(S')$
 
 Usando este razonamiento y aplicando induccion queda demostrado.
 
-### Lema 2
+### Lema 2: No ver las mismas posiciones
 
 Si una solucion optima $S$ contiene las observaciones $q_{iA}$ y $q_{iB}$, existe otra solucion optima que o no contiene a $q_{iA}$ o no contiene a $q_{iB}$.
 
@@ -212,10 +212,59 @@ Luego:$$c(S)\leq c(S')$$
 
 Pero $S$ es optimo, por lo que: $$c(S)= c(S')$$
 
-Y optenemos una solucion optima diferente.
+Y obtenemos una solucion optima diferente.
+
+### Lema 3: Evitar solapamientos
+
+Sea $S$ una solucion tal que $\exist i< n-k,j\leq k:q_{iA} \isin S$ $\wedge$ $q_{(i+j)A}\isin S$. Luego, existe la solucion $S'=S-\{q_{(i+j)A}\} + \{q_{(i+k)A}\}$ tal que $c(S')\geq c(S)$
+
+**Demostración**
+
+$c(S)=|\bigcup (S)|=|\bigcup (S-\{q_{(i+j)A}\})\cup q_{(i+j)A}|$
+
+Como $q_{iA} \isin S$ sea $Q=\{l:a_l=1$ $\wedge$ $i+j<l< k\}$. Luego obviamente $Q=q_{(i+j)A}/q_{iA}$:
+
+$c(S)=|\bigcup (S-\{q_{(i+j)A}\})\cup Q|$
+
+Pero $Q\subseteq q_{(i+kA)}$, por tanto
+
+
+$c(S)\leq|\bigcup (S-\{q_{(i+j)A}\})\cup q_{(i+kA)}|$
+
+$=>c(S)\leq S'$
+
+Con $S'=S-\{q_{(i+j)A}\} \cup \{q_{(i+k)A}\}$
+
+Nota: El lema se aplica homológamente a $B$
+
+### Lema 4: Deteccion de soluciones inmediatas
+
+Sea $P=(A,B,p,k)$ una instancia del problema ($A=\{j:a_j=1\}$ y $B=\{j:b_j=1\}$). Dado una caso de la forma $(i,k_A,k_B,p_i)$ del problema. Si se cumple:
+$$
+    [(n-i-k_A)/k]+[(n-i-k_B)/k]\leq p
+$$ 
+
+Entonces:
+
+$$c(i,k_A,k_B,p)=\sum_{j=i}^n (a_i+b_i-a_ib_i)$$
+
+**Demostración**
+
+Sea $p_A=[(n-i-k_A)/k]$ y $[p_B=(n-i-k_B)/k]$
+
+La selección $S'=\{q_{(i+k_A+kj)A}:0<j<p_A\} \cup \{q_{(i+k_B+kj)B}:0<j<p_B\}$ es una seleccion valida, ya que $p_A+p_B<p$. Luego $\forall j>k_A(k_B) \exist h:j \isin q_{hA}(a_{hB}) \wedge q_{hA}(q_{hB})\isin S'$. Por lo que todos los valores a partir de la posicion i pertenecen a una observación.
+
 
 ### Complejidad de las podas
 
 Para el lema 1: Este lema evita calcular (ii) cuando $a_i=0$, (iii) cuando $b_i=0$ y $iv$ cuando $a_i=0$ o $b_i=0$. Al solo analizar aquellos casos donde hay una respuesta, sea $m=\sum (a_i + b_i - a_ib_i)$ la cantidad de ejercicios resueltos, la complejidad baja a  $O(mpk^2)$.
 
-Par el lema 2: Con este lema, descartamos aquellas soluciones que usen (iv) por completo. La repercusion directa es que no se analizaran los casos donde si $k_A\neq0,k_A=k_B$. Por lo que la complejidad baja a $O(np(k^2-k+1))$.
+Para el lema 2: Con este lema, descartamos aquellas soluciones que usen (iv) por completo. La repercusión directa es que no se analizaran los casos donde si $k_A\neq0,k_A=k_B$. Por lo que la complejidad baja a $O(np(k^2-k+1))$.
+
+Para el lema 3: Esto nos permite calcular ventanas solapadas, haciendo que no se aplique (ii) y (iv) si $k_A>0$, ni tampoco (iii) ni (iv) si $k_B<0$
+
+Para el lema 4: Esta poda permite resolver problemas de forma sencilla cuando $k*p\rightarrow n$ y solo añade un preprocesamiento de tamaño $O(n)$.
+
+![Comparacion variando el valor de k](k%20plot.png)
+
+![Comparacion variando el valor de p](p%20plot.png)

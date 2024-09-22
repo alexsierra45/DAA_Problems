@@ -1,6 +1,14 @@
-# Problemas
+# Proyecto de DAA
 
-## El Laberinto
+## Integrantes
+
+- Javier Rodriguez Sanchez
+- Juan Carlos Espinosa Delgado
+- Alex Sierra Alcala 
+
+## Problemas
+
+### El Laberinto
 
 En tiempos antiguos, esos cuando los edificios se derrumbaban por mal tiempo y la conexión mágica era muy lenta, los héroes del reino se aventuraban en el legendario laberinto, un intrincado entramado de pasillos, cada uno custodiado por una bestia mágica. Los pasillos sólo podían caminarse en un sentido pues un viento muy fuerte no te dejaba regresar. Se decía que las criaturas del laberinto, uniendo sus fuerzas mágicas (garras y eso), habían creado ciclos dentro de este, atrapando a cualquiera que entrara a ellos en una especie de montaña rusa sin final en la que un monstruo se reía de ti cada vez que le pasabas por al lado, una locura.
 
@@ -8,7 +16,7 @@ El joven héroe Juan Carlos, se enfrentaba a una prueba única: desmantelar los 
 
 Cada vez que el héroe asesinaba cruelmente (no importa porque somos los buenos) a la criatura que cuidaba una un camino, este se rompía y desaparecía. Juan Carlos era fuerte, pero no tanto, debía optimizar bien a cuántos monstruos enfrentarse. Ayude al héroe encontrando la mínima cantidad de monstruos que debe matar para eliminar todas las montañas rusas de burla y depravación.
 
-## Tramposo
+### Tramposo
 
 Javier está pasando un curso de Diseño y Análisis de Algoritmos. Este año, por primera vez en la historia, los profesores han decidido evaluar el curso mediante un examen final y Javier se ha dado cuenta de que, a grandes rasgos, está frito. A pesar de ser un poco barco, es de hecho un muchacho inteligente y rápidamente se da cuenta de que su única forma de aprobar era hacer trampa. El día de la prueba, Javier se sentó en el asiento que estaba entre Hansel y Elena para fijarse, con la esperanza de que, uniendo las preguntas respondidas por cada uno, se pudiera formar un examen correcto.
 
@@ -16,7 +24,7 @@ El examen tiene $n$ preguntas, ordenadas en la hoja. Elena y Hansel pueden no se
 
 Ayude a Javier a saber la cantidad máxima de preguntas que puede responder con su (tramposa) estrategia.
 
-## Ciudades
+### Ciudades
 
 Cuba tiene inicialmente $N$ ciudades aisladas, donde la $i$-ésima ciudad tiene una significancia de $A_i$. Alex, el Presidente de Cuba quiere conectar todas las ciudades. Él puede construir una carretera bidireccional de longitud $L$ $(L > 0)$ desde la ciudad $X$ a la ciudad $Y$ si $(A_X$ & $A_Y$ & $L) = L$, donde & representa el operador AND bit a bit.
 

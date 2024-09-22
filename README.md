@@ -2,9 +2,9 @@
 
 ## Integrantes
 
-- Javier Rodriguez Sanchez
+- Javier Rodríguez Sánchez
 - Juan Carlos Espinosa Delgado
-- Alex Sierra Alcala 
+- Alex Sierra Alcalá
 
 ## Problemas
 
